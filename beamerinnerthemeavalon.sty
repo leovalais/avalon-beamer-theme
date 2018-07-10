@@ -8,7 +8,7 @@
   \vspace*{1mm}
   \begin{beamercolorbox}{}
     \begin{tikzpicture}
-      \fill[iOS-purple] (0,0) rectangle (14cm,.1mm);
+      \fill[avalon@progress bar color] (0,0) rectangle (14cm,.1mm);
     \end{tikzpicture}
   \end{beamercolorbox}
 
@@ -33,7 +33,7 @@
 
 \defbeamertemplate*{background}{avalon}{
   \begin{tikzpicture}
-    \ifx\avalonblueprint\undefined {
+    \ifx\avalon@blueprint\undefined {
       \usebeamercolor{background}
       \fill[bg] (0,0) rectangle (\the\paperwidth,\the\paperheight);
     } \else {

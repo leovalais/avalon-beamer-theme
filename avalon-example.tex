@@ -1,28 +1,30 @@
-\documentclass{beamer}
+\documentclass[aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{minted}
+\usepackage{appendixnumberbeamer}
+\usepackage{hyperref}
 % \usepackage[texcoord,grid,gridunit=mm,gridcolor=red!20,subgridcolor=gray!10]{eso-pic}
 
 
 \usemintedstyle{colorful}
 
 \usetheme{avalon}
-% \def\avalonprogressbar{1}
+\def\avalonprogressbar{1}
 \def\avalondarkmintedstyle{zenburn}
 
 \title{Avalon theme}
 \subtitle{A modern theme for beamer}
-\date{\it{}Somewhere in time \faMusic}
+\date{\it{}Somewhere in time \footnotesize\faMusic}
 \author{Léo Valais}
 \institute{Institute}
 
 \titlegraphic{
   \vspace*{-1em}
   \begin{tikzpicture}
-    \node () {Your logo};
+    \draw[iOS-orange] (0,0) circle (1cm) node {\color{iOS-blue}Your logo};
   \end{tikzpicture}
 }
 
@@ -35,7 +37,16 @@
 
 \begin{frame}
   \frametitle{TOC}
-  \tableofcontents{}
+  \tableofcontents
+\end{frame}
+
+\begin{frame}
+  \frametitle{About Avalon}
+  Avalon is modern beamer theme inspired of the \texttt{metropolis} theme which
+  can be found at: \textcolor{iOS-tealblue}{\href{https://github.com/matze/mtheme}{https://github.com/matze/mtheme}}.
+
+  It redefines some beamer templates and provides some customization options in
+  addition to beamer's ones.
 \end{frame}
 
 \section{A theorem}
@@ -88,12 +99,25 @@ number not in the first $p$ numbers.
   \begin{block}{blip}
     blop
   \end{block}
+
+  \begin{block}[iOS-orange]{}
+    no title
+
+    still looks fine
+  \end{block}
+
+  \begin{center}
+    \begin{block}{}
+      centered
+    \end{block}
+  \end{center}
 \end{frame}
 
 
 \section{Awesome blueprint!}
 \begin{blueprintframe}
   \frametitle{Blueprint}
+  hello
 \end{blueprintframe}
 
 \section{Bye!}
@@ -146,6 +170,7 @@ number not in the first $p$ numbers.
   \end{macosdarkdialog}
 \end{popup}
       \end{minted}
+      \footnotetext[0]{Notice how the syntactic coloration changes.}
     \end{macosdarkdialog}
   \end{popup}
 
@@ -168,20 +193,37 @@ FACT
   \end{popup}
 \end{frame}
 
-\begin{frame}
-  \nocite{*}
-  \bibliographystyle{plain}
-  \bibliography{example}
-\end{frame}
-
 \begin{standoutframe}
   \begin{center}
     \scalebox{1.5}[1.5]{\Huge \bfseries Any questions?}
   \end{center}
 \end{standoutframe}
 
+\appendix{}
+
+\begin{frame}
+  \nocite{*}
+  \bibliographystyle{plain}
+  \bibliography{example}
+\end{frame}
+
+\begin{frame}[fragile,fragile]
+  \frametitle{Appendix}
+  To add an appendix frame, include:
+
+\begin{verbatim}
+\usepackage{appendixnumberbeamer}
+\end{verbatim}
+
+  and in your \texttt{document} place between two \texttt{frames}:
+
+\begin{verbatim}
+\appendix{}
+\end{verbatim}
+\end{frame}
+
 \begin{frame}[fragile]
-  \frametitle{poij}
+  \frametitle{Boxes}
   \begin{alertblock}{Fuyez!}
     Pauvres fous...
   \end{alertblock}

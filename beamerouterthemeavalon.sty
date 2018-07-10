@@ -13,7 +13,7 @@
 % Frame title
 \defbeamertemplate*{frametitle}{avalon}[1][]
 {
-  \ifx\avalonblueprint\undefined {
+  \ifx\avalon@blueprint\undefined {
     \ifx\avalonprogressbar\undefined {
       \vspace*{-1em}
     } \else {
@@ -48,7 +48,7 @@
 }
 
 \defbeamertemplate*{footline}{avalon}{
-  \ifthenelse{\isundefined{\avalonblueprint}}{
+  \ifthenelse{\isundefined{\avalon@blueprint}}{
     \ifthenelse{\insertframenumber = 0\OR\NOT\isundefined{\avalon@standout}}{%
       % don't show it in the title slide nor in standout frames%
     }{%

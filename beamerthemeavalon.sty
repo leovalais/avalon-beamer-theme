@@ -44,6 +44,12 @@
 
 \def\avalondarkmintedstyle{}
 
+\newcommand{\ccft}[1]{
+  \usebeamercolor{#1}
+  \definecolor{avalon@ccft.fg}{named}{fg}
+  \definecolor{avalon@ccft.bg}{named}{bg}
+}
+
 %%%
 %%% Blueprints
 %%%
@@ -73,11 +79,17 @@
 }
 
 \newenvironment{blueprintframe}{
-  \def\avalonblueprint{1}
+  \makeatletter
+  \def\avalon@blueprint{1}
+  \makeatother
   \begin{frame}
+    \setbeamercolor{normal text}{fg=white}
+    \usebeamercolor[fg]{normal text}
   }{
   \end{frame}
-  \undef\avalonblueprint
+  \makeatletter
+  \undef\avalon@blueprint
+  \makeatother
 }
 
 \newenvironment{blueprint}[2][]{
@@ -168,23 +180,37 @@
 %%% Blocks
 %%%
 \renewenvironment{alertblock}[1]{\begin{itemize}
-  \item[]\textcolor{iOS-red}{\textbf{#1}}
+  \ifthenelse{\equal{#1}{\@empty}}{}{\item[]\textcolor{iOS-red}{\textbf{#1}}}
   \item[]}
   {\end{itemize}}
 \tcolorboxenvironment{alertblock}{blanker,borderline west={1pt}{3mm}{iOS-red}}
 \renewenvironment{exampleblock}[1]{\begin{itemize}
-  \item[]\textcolor{iOS-green!60!gray}{\textbf{#1}}
+  \ifthenelse{\equal{#1}{\@empty}}{}{\item[]\textcolor{iOS-green!60!gray}{\textbf{#1}}}
   \item[]}
   {\end{itemize}}
 \tcolorboxenvironment{exampleblock}{blanker,borderline west={1pt}{3mm}{iOS-green!60!gray}}
-\renewenvironment{block}[2][iOS-blue]{
-\begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{#1}]
-  \begin{itemize}
-  \item[]\textcolor{#1}{\textbf{#2}}
-  \item[]
+\renewenvironment{block}[2][]{
+  \begin{@empty}
+    \ccft{block title}
+    \ifthenelse{\equal{#1}{\@empty}}{
+      \begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{avalon@ccft.fg}]
+      }{\begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{#1}]}
+      \begin{itemize}
+        \ifthenelse{\equal{#2}{\@empty}}{}{%
+          \ifthenelse{\equal{#1}{\@empty}}{\color{avalon@ccft.fg}}{\color{#1}}
+        \item[] {\usebeamerfont{block title}#2}}
+        \usebeamercolor[fg]{normal text}
+        \usebeamerfont{normal text}
+      \item[]
+    }{
+    \end{itemize}
+  \end{tcolorbox}
+\end{@empty}
+}
+\renewenvironment{theorem}[1][Theorem]{
+  \begin{block}[black]{#1}
   }{
-  \end{itemize}
-\end{tcolorbox}
+  \end{block}
 }
 
 %% HACK!

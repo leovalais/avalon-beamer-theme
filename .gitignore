@@ -22,6 +22,9 @@
 *.out
 *.bcf
 *.synctex.gz
+*.nav
+*.snm
+*.vrb
 
 auto
 _region_.tex

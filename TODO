@@ -1,0 +1,6 @@
+- support for normal/16:9 ratios
+- add support for different ratios
+- table of contents style
+- add frame options to blueprintframe and standoutframe
+- deal with appendix numbering and progress bars
+- add small centered blocks (\tcbox)
