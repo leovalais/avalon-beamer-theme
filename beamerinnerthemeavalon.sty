@@ -1,0 +1,47 @@
+\mode<presentation>
+
+\defbeamertemplate*{title page}{avalon}{
+  \usebeamerfont{title}\inserttitle\\%
+  \vspace*{3mm}%
+  \usebeamerfont{subtitle}\insertsubtitle
+
+  \vspace*{1mm}
+  \begin{beamercolorbox}{}
+    \begin{tikzpicture}
+      \fill[iOS-purple] (0,0) rectangle (14cm,.1mm);
+    \end{tikzpicture}
+  \end{beamercolorbox}
+
+  \vspace*{5mm}
+  \begin{columns}[totalwidth=14cm]
+    \column{6.5cm}
+    \begin{tabular}{cp{6cm}}
+      \usebeamerfont{author}\faUser & \insertauthor \\
+      \usebeamerfont{date}\faCalendar & \insertdate \\
+      \usebeamerfont{institute}\faMapMarker & \insertinstitute
+    \end{tabular}
+
+    \column{7.5cm}
+    \begin{flushright}
+      \inserttitlegraphic
+    \end{flushright}
+  \end{columns}
+
+  \addtocounter{framenumber}{-1} % don't include the title slide
+}
+
+
+\defbeamertemplate*{background}{avalon}{
+  \begin{tikzpicture}
+    \ifx\avalonblueprint\undefined {
+      \usebeamercolor{background}
+      \fill[bg] (0,0) rectangle (\the\paperwidth,\the\paperheight);
+    } \else {
+      \shade[inner color=avalon@blpint,outer color=avalon@blpext,draw=black] (0,0) rectangle (\the\paperwidth,\the\paperheight);
+      \draw[step=2.5mm,avalon@blpmin,very thin] (0,0) grid (\the\paperwidth,\the\paperheight);
+      \draw[step=1cm,avalon@blpmaj] (0,0) grid (\the\paperwidth,\the\paperheight);
+    } \fi
+  \end{tikzpicture}
+}
+
+\mode<all>

@@ -1,0 +1,83 @@
+\mode<presentation>
+\RequirePackage{ifthen}
+
+\newtcolorbox{frametitlebox}[1][]{
+  sharp corners=all,frame hidden,
+  drop small lifted shadow=black,enhanced,
+  % colback=avalon@primay color,
+  interior style={top color=avalon@primary color, bottom color=avalon@primary color!75!gray},
+  width=\the\paperwidth+1em,#1
+}
+
+
+% Frame title
+\defbeamertemplate*{frametitle}{avalon}[1][]
+{
+  \ifx\avalonblueprint\undefined {
+    \ifx\avalonprogressbar\undefined {
+      \vspace*{-1em}
+    } \else {
+      \vspace*{-12.1mm}
+      \begin{beamercolorbox}[wd=\paperwidth,ht=1.2cm]{ft}
+        \usebeamercolor{primary color}
+        \begin{tikzpicture}
+          \fill[bg] (0,0) rectangle (\the\paperwidth, .3mm);
+          \fill[bg!50!white] (0,0) rectangle (\insertframenumber*\paperwidth/\inserttotalframenumber, .3mm);
+        \end{tikzpicture}
+      \end{beamercolorbox}
+
+      \vspace*{-8.3mm}
+    } \fi
+
+    \begin{addmargin}[-2.5em]{0em}
+      \ifx\insertframesubtitle\@empty {
+        \begin{frametitlebox}
+          \centering \bfseries
+          \Large \color{white} \insertframetitle
+        \end{frametitlebox}
+      } \else {
+        \begin{frametitlebox}
+          \centering \bfseries
+          \normalsize \color{gray!50!white} \insertframesubtitle \\
+          \Large \color{white} \insertframetitle
+        \end{frametitlebox}
+      } \fi
+    \end{addmargin}
+  } \else {
+  } \fi
+}
+
+\defbeamertemplate*{footline}{avalon}{
+  \ifthenelse{\isundefined{\avalonblueprint}}{
+    \ifthenelse{\insertframenumber = 0\OR\NOT\isundefined{\avalon@standout}}{%
+      % don't show it in the title slide nor in standout frames%
+    }{%
+      \vspace*{-5mm}
+      \hspace*{\fill} %\vspace*{-1cm} \hspace*{-5mm}
+      \begin{tikzpicture}
+        \node (fn) {%
+          \usebeamercolor{page number in head/foot}\color{fg}%
+          \usebeamerfont{page number in head/foot}%
+          \insertframenumber/\inserttotalframenumber};
+        \node[below=of fn] {};
+      \end{tikzpicture}
+    }
+  }{
+    \LARGE \color{white} \tt
+    \vspace*{-10mm}
+    \hspace*{1.1mm}
+    \begin{tikzpicture}
+      \node[draw=white,thick,minimum width=\textwidth-2cm,minimum height=10mm] (title) at (0,0) {\insertframetitle};
+      \draw[white,thick] (title.north east) ++(1mm,-.1mm)
+      -- ++(10mm,0)
+      -- ++(0,-10mm)
+      -- ++(-10mm,0)
+      -- ++(0,10.1mm) ++(0,-10mm)
+      -- ++(10mm,10mm);
+      \node (fn) at ([xshift=3.5mm,yshift=-3.5mm]title.north east) {\footnotesize\insertframenumber};
+      \node (tfn) at ([xshift=4.5mm,yshift=-3.5mm]fn) {\footnotesize\inserttotalframenumber};
+      \node[below=of title] {};
+    \end{tikzpicture}
+  }
+}
+\mode<all>

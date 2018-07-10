@@ -1,0 +1,197 @@
+\mode<presentation>
+
+% Requirement
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{scrextend} % addmargin
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{fontawesome}
+\RequirePackage[absolute,overlay]{textpos} % textblock* [text independant,above everything else]
+
+\usetikzlibrary{calc,decorations.pathmorphing,patterns,shapes,positioning,fit}
+\pgfdeclaredecoration{blueprintbyhand}{initial}{
+    \state{initial}[width=+\pgfdecoratedinputsegmentremainingdistance,auto corner on length=1mm,]{
+        \pgfpathcurveto%
+        {% From
+            \pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}
+                            {\pgfdecorationsegmentamplitude}
+        }
+        {%  Control 1
+        \pgfmathrand
+        \pgfpointadd{\pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}{0pt}}
+                        {\pgfqpoint{-\pgfdecorationsegmentaspect\pgfdecoratedinputsegmentremainingdistance}%
+                                        {\pgfmathresult\pgfdecorationsegmentamplitude}
+                        }
+        }
+        {%TO
+        \pgfpointadd{\pgfpointdecoratedinputsegmentlast}{\pgfpoint{1pt}{1pt}}
+        }
+    }
+    \state{final}{}
+}
+
+% Settings
+\usecolortheme{avalon}
+\usefonttheme{avalon}
+\useinnertheme{avalon}
+\useoutertheme{avalon}
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{itemize item}{\usebeamerfont{itemize item}\usebeamercolor[fg]{itemize item}\faCaretRight}
+\setbeamertemplate{itemize subitem}{\usebeamerfont{itemize subitem}\usebeamercolor[fg]{itemize subitem}\faAngleRight}
+\setbeamertemplate{itemize subsubitem}{\usebeamerfont{itemize subsubitem}\usebeamercolor[fg]{itemize subsubitem}\faCube}
+
+\def\avalondarkmintedstyle{}
+
+%%%
+%%% Blueprints
+%%%
+
+% \def\bpbyhand{1}
+\ifthenelse{\isundefined{\bpbyhand}}{
+  \def\bpdecoration{}
+}{
+  \def\bpdecoration{blueprintbyhand}
+}
+
+\newcommand{\bp}[2][]{
+  \ifthenelse{\isundefined{\bpbyhand}}{
+    \node[decorate,draw=white,thick,#1]#2;
+  }{
+    \node[decorate,draw=white,#1]#2;
+    \node[decorate,draw=white,#1,bend left]#2;
+    \node[decorate,draw=white,#1,bend right]#2;
+  }
+}
+\newcommand{\bparrow}[2][]{
+  \draw[decorate,draw=white,thick,->,#1]#2;
+}
+\newcommand{\pbgroup}[3][left]{
+  \node[draw=white,very thick,dashed,fit={#3}] (group#2) {};
+  \node[#1=of group#2,rotate=90,anchor=center] () {\large\color{white}#2};
+}
+
+\newenvironment{blueprintframe}{
+  \def\avalonblueprint{1}
+  \begin{frame}
+  }{
+  \end{frame}
+  \undef\avalonblueprint
+}
+
+\newenvironment{blueprint}[2][]{
+  \begin{tikzpicture}[#1]
+    \shade[inner color=avalon@blpint,outer color=avalon@blpext,draw=black] (0,0) rectangle #2;
+    \draw[step=2.5mm,avalon@blpmin,very thin] (0,0) grid #2;
+    \draw[step=1cm,avalon@blpmaj] (0,0) grid #2;
+  }{
+  \end{tikzpicture}
+}
+
+
+%%%
+%%% Standouts
+%%%
+
+\newenvironment{standoutframe}{
+  \makeatletter
+  \def\avalon@standout{1}
+  \setbeamercolor{background}{bg=avalon@primary color}
+  \setbeamercolor{normal text}{fg=avalon@background color}
+  \makeatother
+  \begin{frame}
+    \usebeamercolor[fg]{normal text}
+  }{
+  \end{frame}
+  \makeatletter
+  \setbeamercolor{normal text}{fg=avalon@primary color}
+  \setbeamercolor{background}{fg=avalon@background color}
+  \undef\avalon@standout
+  \makeatother
+  \addtocounter{framenumber}{-1} % don't count this slide
+}
+
+
+%%%
+%%% Popups
+%%%
+\newenvironment{popup}[2][(80mm,50mm)]{
+  \begin{textblock*}{#2\paperwidth}[0.5, 0.5]#1
+    \begin{overprint}
+    }{
+    \end{overprint}
+  \end{textblock*}
+}
+
+\newcommand{\avalon@macosdot}[1]{\small\textcolor{#1}{\faCircle}}
+\newtcolorbox{macosdialog}[2][]{enhanced,
+      coltitle=black,
+      colback=avalon@macosbg,
+      boxrule=0mm,
+      frame style={draw=avalon@macosbord,fill=avalon@macosbord},
+      title style={top color=avalon@macostop,bottom color=avalon@macosbot},
+      drop fuzzy shadow=black,
+      #1, %hbox
+      title=\hspace*{-3mm}%
+      \avalon@macosdot{avalon@macosred} %
+      \avalon@macosdot{avalon@macosyellow} %
+      \avalon@macosdot{avalon@macosgreen}%
+      \hspace*{\fill}\hspace*{-10mm}#2\hspace*{\fill}
+    }
+
+\newenvironment{macosdarkdialog}[2][]{
+  \begin{tcolorbox}[enhanced,
+    coltitle=white,
+    colback=avalon@macosbgdark,
+    boxrule=0mm,
+    frame style={draw=avalon@macosborddark,fill=avalon@macosborddark},
+    title style={top color=avalon@macostopdark,bottom color=avalon@macosbotdark},
+    drop fuzzy shadow=black,
+    #1, %hbox
+    title=\hspace*{-3mm}%
+    \avalon@macosdot{avalon@macosred} %
+    \avalon@macosdot{avalon@macosyellow} %
+    \avalon@macosdot{avalon@macosgreen}%
+    \hspace*{\fill}\hspace*{-10mm}#2\hspace*{\fill}]
+    \setbeamercolor{normal text}{fg=avalon@macostextcoldark}
+    \setbeamercolor{alerted text}{fg=iOS-red!80!white}
+    \setbeamercolor{itemize/enumerate body}{fg=avalon@macostextcoldark}
+    \usemintedstyle{\avalondarkmintedstyle}
+    \color{avalon@macostextcoldark}
+  }{
+  \end{tcolorbox}
+}
+
+
+%%%
+%%% Blocks
+%%%
+\renewenvironment{alertblock}[1]{\begin{itemize}
+  \item[]\textcolor{iOS-red}{\textbf{#1}}
+  \item[]}
+  {\end{itemize}}
+\tcolorboxenvironment{alertblock}{blanker,borderline west={1pt}{3mm}{iOS-red}}
+\renewenvironment{exampleblock}[1]{\begin{itemize}
+  \item[]\textcolor{iOS-green!60!gray}{\textbf{#1}}
+  \item[]}
+  {\end{itemize}}
+\tcolorboxenvironment{exampleblock}{blanker,borderline west={1pt}{3mm}{iOS-green!60!gray}}
+\renewenvironment{block}[2][iOS-blue]{
+\begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{#1}]
+  \begin{itemize}
+  \item[]\textcolor{#1}{\textbf{#2}}
+  \item[]
+  }{
+  \end{itemize}
+\end{tcolorbox}
+}
+
+%% HACK!
+\newenvironment{exampleitemize}[1]{\begin{itemize}
+  \item[]\textcolor{iOS-green!60!gray}{\textbf{#1}}} % HACK
+  {\end{itemize}}
+\tcolorboxenvironment{exampleitemize}{blanker,borderline west={1pt}{3mm}{iOS-green!60!gray}}
+
+
+\mode<all>
