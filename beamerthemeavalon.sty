@@ -181,18 +181,16 @@
 %%%
 \newenvironment{avalon@generic block}[3]{%
   \usebeamercolor{#2}
-  \begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{fg}]
-    \begin{itemize}%
-      % add item only if title exists
-      \ifthenelse{\equal{#1}{\@empty}}{}{%
-        \color{fg}
-        \usebeamerfont{#2}
-      \item[] #1}
-      \usebeamercolor[fg]{#3}
-      \usebeamerfont{#3}
-    \item[]%
-    }{%
-    \end{itemize}
+  \begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{fg},left=2em,top=.10em,bottom=.10em]%
+    % add item only if title exists%
+    \ifthenelse{\equal{#1}{\@empty}}{}{%
+      \color{fg}
+      \usebeamerfont{#2}
+      #1}
+
+    \usebeamercolor[fg]{#3}
+    \usebeamerfont{#3}
+  }{%
   \end{tcolorbox}}
 \renewenvironment{alertblock}[1]{%
   \begin{avalon@generic block}{#1}{block title alerted}{block body alerted}
@@ -202,23 +200,23 @@
   \begin{avalon@generic block}{#1}{block title example}{block body example}
   }{
   \end{avalon@generic block}}
+
 \renewenvironment{block}[2][]{
   \begin{@empty}
     \ccft{block title}
     \ifthenelse{\equal{#1}{\@empty}}{
-      \begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{avalon@ccft.fg}]
-      }{\begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{#1}]}
-      \begin{itemize}
+      \begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{avalon@ccft.fg},left=2em,top=.10em,bottom=.10em]
+      }{\begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{#1},left=2em,top=.10em,bottom=.10em]}
         \ifthenelse{\equal{#2}{\@empty}}{}{%
           \ifthenelse{\equal{#1}{\@empty}}{\color{avalon@ccft.fg}}{\color{#1}}
-        \item[] {\usebeamerfont{block title}#2}}
+          \usebeamerfont{block title}
+          #2}
+
         \usebeamercolor[fg]{block body}
         \usebeamerfont{block body}
-      \item[]
     }{
-    \end{itemize}
-  \end{tcolorbox}
-\end{@empty}}
+    \end{tcolorbox}
+  \end{@empty}}
 \renewenvironment{theorem}[1][Theorem]{
   \begin{block}[black]{#1}
   }{

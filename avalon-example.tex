@@ -81,7 +81,57 @@ number not in the first $p$ numbers.
   \end{itemize}
 \end{frame}
 
-\subsection{Boxes}
+\subsection{Blocks}
+\begin{frame}[fragile]
+  \frametitle{Blocks}
+  \begin{columns}
+    \column{.45\textwidth}
+    \begin{block}{A block}
+      Some text.
+    \end{block}
+
+    \begin{alertblock}{Pay attention!}
+      I mean, really\dots
+    \end{alertblock}
+
+    \begin{theorem}
+      $\forall x, \forall n, x = 2 \cdot n \Rightarrow x = (3 - 1) \cdot n$
+    \end{theorem}
+
+    \begin{exampleblock}{Meaningful example}
+      $2 = 3 - 1$
+    \end{exampleblock}
+
+    \begin{block}[iOS-orange]{}
+      Block without a title.
+
+      Better looking with at least two lines of content.
+    \end{block}
+
+    \column{.55\textwidth}
+    \begin{block}[pink]{Change the color!}
+      \texttt{block}'s default color is beamer color \texttt{block title.fg}.
+
+      But it can be changed
+      \begin{itemize}
+      \item globally:
+\begin{minted}{latex}
+\setbeamercolor{block title}{
+  fg=your color
+}
+\end{minted}
+      \item or for one specific block:
+\begin{minted}{latex}
+\begin{block}[your-color]{title}
+  content
+\end{block}
+\end{minted}
+      \end{itemize}
+    \end{block}
+
+  \end{columns}
+\end{frame}
+
 \colorlet{mycolor}{iOS-red!25!white}
 \begin{frame}{Thrid frame -- Amazing!}
   text
@@ -199,49 +249,49 @@ FACT
   \end{center}
 \end{standoutframe}
 
-\appendix{}
+% \appendix{}
 
-\begin{frame}
-  \nocite{*}
-  \bibliographystyle{plain}
-  \bibliography{example}
-\end{frame}
+% \begin{frame}
+%   \nocite{*}
+%   \bibliographystyle{plain}
+%   \bibliography{example}
+% \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Appendix}
-  To add an appendix frame, include:
+% \begin{frame}[fragile]
+%   \frametitle{Appendix}
+%   To add an appendix frame, include:
 
-\begin{verbatim}
-\usepackage{appendixnumberbeamer}
-\end{verbatim}
+% \begin{verbatim}
+% \usepackage{appendixnumberbeamer}
+% \end{verbatim}
 
-  and in your \texttt{document} place between two \texttt{frames}:
+%   and in your \texttt{document} place between two \texttt{frames}:
 
-\begin{verbatim}
-\appendix{}
-\end{verbatim}
-\end{frame}
+% \begin{verbatim}
+% \appendix{}
+% \end{verbatim}
+% \end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{Boxes}
-  \begin{alertblock}{Fuyez!}
-    Pauvres fous\ldots
-  \end{alertblock}
-  \begin{exampleblock}{Example}
-\begin{minted}{ocaml}
-let rec fact = function
-  | 0 -> 1
-  | x -> x * (fact (x - 1));;
-\end{minted}
-  \end{exampleblock}
-  \begin{block}{Version using \texttt{if}}
- \begin{minted}{ocaml}
-let rec fact x =
-  if x = 0 then
-    1
-  else
-    x * (fact (x - 1));;
-\end{minted}
-  \end{block}
-\end{frame}
+% \begin{frame}[fragile]
+%   \frametitle{Boxes}
+%   \begin{alertblock}{Fuyez!}
+%     Pauvres fous\ldots
+%   \end{alertblock}
+%   \begin{exampleblock}{Example}
+% \begin{minted}{ocaml}
+% let rec fact = function
+%   | 0 -> 1
+%   | x -> x * (fact (x - 1));;
+% \end{minted}
+%   \end{exampleblock}
+%   \begin{block}{Version using \texttt{if}}
+%  \begin{minted}{ocaml}
+% let rec fact x =
+%   if x = 0 then
+%     1
+%   else
+%     x * (fact (x - 1));;
+% \end{minted}
+%   \end{block}
+% \end{frame}
 \end{document}
