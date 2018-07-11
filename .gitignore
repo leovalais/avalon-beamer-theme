@@ -25,6 +25,7 @@
 *.nav
 *.snm
 *.vrb
+*.pyg
 
 auto
 _region_.tex

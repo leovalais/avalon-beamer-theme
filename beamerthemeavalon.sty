@@ -179,16 +179,29 @@
 %%%
 %%% Blocks
 %%%
-\renewenvironment{alertblock}[1]{\begin{itemize}
-  \ifthenelse{\equal{#1}{\@empty}}{}{\item[]\textcolor{iOS-red}{\textbf{#1}}}
-  \item[]}
-  {\end{itemize}}
-\tcolorboxenvironment{alertblock}{blanker,borderline west={1pt}{3mm}{iOS-red}}
-\renewenvironment{exampleblock}[1]{\begin{itemize}
-  \ifthenelse{\equal{#1}{\@empty}}{}{\item[]\textcolor{iOS-green!60!gray}{\textbf{#1}}}
-  \item[]}
-  {\end{itemize}}
-\tcolorboxenvironment{exampleblock}{blanker,borderline west={1pt}{3mm}{iOS-green!60!gray}}
+\newenvironment{avalon@generic block}[3]{%
+  \usebeamercolor{#2}
+  \begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{fg}]
+    \begin{itemize}%
+      % add item only if title exists
+      \ifthenelse{\equal{#1}{\@empty}}{}{%
+        \color{fg}
+        \usebeamerfont{#2}
+      \item[] #1}
+      \usebeamercolor[fg]{#3}
+      \usebeamerfont{#3}
+    \item[]%
+    }{%
+    \end{itemize}
+  \end{tcolorbox}}
+\renewenvironment{alertblock}[1]{%
+  \begin{avalon@generic block}{#1}{block title alerted}{block body alerted}
+  }{
+  \end{avalon@generic block}}
+\renewenvironment{exampleblock}[1]{%
+  \begin{avalon@generic block}{#1}{block title example}{block body example}
+  }{
+  \end{avalon@generic block}}
 \renewenvironment{block}[2][]{
   \begin{@empty}
     \ccft{block title}
@@ -205,8 +218,7 @@
     }{
     \end{itemize}
   \end{tcolorbox}
-\end{@empty}
-}
+\end{@empty}}
 \renewenvironment{theorem}[1][Theorem]{
   \begin{block}[black]{#1}
   }{
