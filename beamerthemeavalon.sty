@@ -36,6 +36,15 @@
 \useinnertheme{avalon}
 \useoutertheme{avalon}
 
+%% HACK to make sure that the content of the slide uses the normal text
+%%      fonts and colors
+%%      https://github.com/matze/mtheme/issues/130#issuecomment-176499745
+\def\beamer@framenotesbegin{% at beginning of slide
+  \usebeamercolor[fg]{normal text}
+  \gdef\beamer@noteitems{}%
+  \gdef\beamer@notes{}%
+}
+
 \setbeamertemplate{navigation symbols}{}
 
 \setbeamertemplate{itemize item}{\usebeamerfont{itemize item}\usebeamercolor[fg]{itemize item}\faCaretRight}
@@ -222,12 +231,5 @@
   }{
   \end{block}
 }
-
-%% HACK!
-\newenvironment{exampleitemize}[1]{\begin{itemize}
-  \item[]\textcolor{iOS-green!60!gray}{\textbf{#1}}} % HACK
-  {\end{itemize}}
-\tcolorboxenvironment{exampleitemize}{blanker,borderline west={1pt}{3mm}{iOS-green!60!gray}}
-
 
 \mode<all>
