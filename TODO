@@ -3,4 +3,11 @@
 - table of contents style
 - add frame options to blueprintframe and standoutframe
 - deal with appendix numbering and progress bars
-- add small centered blocks (\tcbox)
+- add global options for blocks to have a background color
+- add a SUDE-like block (with its \tcbox version)
+- in columns env, define \halfcolumn \thirdcolumn \quartercolumn
+- in columns env, add an option that defaults to 0mm, which represents the width of
+  and additional empty column to add at the begining which acts as a margin
+- special command for links with correct formatting
+- find a way to ensure that normal text font and color is used for frame content
+  without having to rely on frametitle template (not inserted if none.)

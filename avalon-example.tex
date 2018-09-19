@@ -8,7 +8,6 @@
 \usepackage{hyperref}
 % \usepackage[texcoord,grid,gridunit=mm,gridcolor=red!20,subgridcolor=gray!10]{eso-pic}
 
-
 \usemintedstyle{colorful}
 
 \usetheme{avalon}
@@ -32,13 +31,15 @@
 \begin{document}
 
 \begin{frame}
-\titlepage
+\titlepage{}
 \end{frame}
 
 \begin{frame}
   \frametitle{TOC}
   \tableofcontents
 \end{frame}
+
+\section{Introduction}
 
 \begin{frame}
   \frametitle{About Avalon}
@@ -49,36 +50,78 @@
   addition to beamer's ones.
 \end{frame}
 
-\section{A theorem}
 \begin{frame}
-\frametitle{There Is No Largest Prime Number}
-\framesubtitle{The proof uses \textit{reductio ad absurdum}.}
-\begin{theorem}
-There is no largest prime number. \end{theorem}
-\begin{enumerate}
-\item<1-| alert@1> Suppose $p$ were the largest prime number.
-\item<2-> Let $q$ be the product of the first $p$ numbers.
-\item<3-> Then $q+1$ is not divisible by any of them.
-\item<1-> But $q + 1$ is greater than $1$, thus divisible by some prime
-number not in the first $p$ numbers.
-\end{enumerate}
+  \frametitle{There Is No Largest Prime Number}
+  \framesubtitle{The proof uses \textit{reductio ad absurdum}.}
+  \begin{theorem}
+    There is no largest prime number.
+  \end{theorem}
+
+  \begin{enumerate}
+  \item Suppose $p$ were the largest prime number.
+  \item Let $q$ be the product of the first $p$ numbers.
+  \item Then $q+1$ is not divisible by any of them.
+  \item But $q + 1$ is greater than $1$, \alert{thus divisible by some prime
+      number} not in the first $p$ numbers.
+  \end{enumerate}
 \end{frame}
 
-\section{Basic \LaTeX}
-\subsection{Hmmm... some... items}
-\begin{frame}{A longer title}
-  \begin{itemize}
-  \item one
-  \item two
+\section{Beamer material}
+\subsection{Colors}
+\begin{frame}[fragile]
+  \frametitle{Colors}
+
+  \newcommand{\col}[1]{\texttt{\textcolor{#1}{#1}}}
+  Avalon defines 8 iOS colors which are extensively used as default colors:
+  \col{iOS-red}, \col{iOS-orange}, \col{iOS-yellow}, \col{iOS-green},
+  \col{iOS-tealblue}, \col{iOS-blue}, \col{iOS-purple} and \col{iOS-pink}.
+
+  Many other default colors are also defined in
+  \texttt{beamercolorthemeavalon.sty}.
+
+  Beamer colors are still customizable using \texttt{setbeamercolor}.
+\end{frame}
+
+\subsection{Lists}
+\begin{frame}
+  \frametitle{Lists}
+  \framesubtitle{\texttt{itemize} and \texttt{enumerate}}
+  \begin{columns}
+    \column{1em}
+    \column{.5\paperwidth}
     \begin{itemize}
-    \item two and half
-    \item two and the.. other... half?
+    \item one
+    \item two
       \begin{itemize}
-      \item no you don't
+      \item 1
+      \item 2
+        \begin{itemize}
+        \item I
+        \item II
+        \item III
+        \end{itemize}
+      \item 3
       \end{itemize}
+    \item three
     \end{itemize}
-  \item \textrm{threee}
-  \end{itemize}
+
+    \column{.5\paperwidth}
+    \begin{enumerate}
+    \item one
+    \item two
+      \begin{enumerate}
+      \item un
+      \item deux
+        \begin{enumerate}
+        \item I
+        \item II
+        \item III
+        \end{enumerate}
+      \item trois
+      \end{enumerate}
+    \item three
+    \end{enumerate}
+  \end{columns}
 \end{frame}
 
 \subsection{Blocks}
@@ -122,7 +165,7 @@ number not in the first $p$ numbers.
 \end{minted}
       \item or for one specific block:
 \begin{minted}{latex}
-\begin{block}[your-color]{title}
+\begin{block}[your color]{title}
   content
 \end{block}
 \end{minted}
@@ -132,122 +175,67 @@ number not in the first $p$ numbers.
   \end{columns}
 \end{frame}
 
-\colorlet{mycolor}{iOS-red!25!white}
-\begin{frame}{Thrid frame -- Amazing!}
-  text
+\makeatletter
+\makeatother
+\section{Avalon-specific environments}
+\subsection{Standout}
+\begin{frame}[standout]
+  \frametitle{Standout frames}
+  This is a \texttt{standoutframe}. Background color and text colors are inverted.
+  \texttt{itemize}, \texttt{enumerate} and \texttt{block title} colors are not.
+  However, the default colors for these \emph{still look nice} with this background.
 
-  \begin{tcolorbox}[frame hidden,fuzzy shadow={1mm}{-1mm}{0mm}{.3mm}{black},enhanced,colback=mycolor]
-    big
-  \end{tcolorbox}
-
-
-  \begin{center}
-    \tcbox[tcbox raise base,frame hidden,fuzzy
-    shadow={.5mm}{-.5mm}{0mm}{.3mm}{black},enhanced,colback=mycolor]{small}
-  \end{center}
-
-  \begin{block}{blip}
-    blop
+  \begin{block}{}
+    To create a standout frame, use
+% \begin{verbatim}
+% \begin{frame}[standout]
+% \end{verbatim}
   \end{block}
 
-  \begin{block}[iOS-orange]{}
-    no title
+  \begin{itemize}
+  \item If \texttt{minted} is imported and a dark theme is defined, it is used in this
+    frame.
+    \begin{exampleblock}{Dark theme example}
+% \begin{minted}{c}
+% #define X (.0f)
+% float x = (3 - 1) * X; // it reminds me some theorem..
+% \end{minted}
+      TODO: insert some C here.
+    \end{exampleblock}
+  \end{itemize}
 
-    still looks fine
-  \end{block}
+  This kind of frame is great to catch the audience's attention.
 
-  \begin{center}
-    \begin{block}{}
-      centered
-    \end{block}
-  \end{center}
+  % \bigskip{}
+  % \begin{block}[iOS-yellow]{Note}
+  %   \texttt{standoutframe}s cannot have reversed frametitles (yet.)
+  % \end{block}
 \end{frame}
 
 
-\section{Awesome blueprint!}
+
+\subsection{Blueprints}
+\subsubsection{Demo}
 \begin{blueprintframe}
   \frametitle{Blueprint}
   hello
 \end{blueprintframe}
 
-\section{Bye!}
-\newcommand{\monly}[2]{\only<#1>{#2}}
-\begin{frame}[fragile]
-  \frametitle{The end.}
-  Thx bye!
-  \pause
-  % dialog
 
-  \pause
-  Ya want sum code right?
-  \pause
-  % dialog
-
-  \pause
-  But ya want Lisp dont ya?
-  \pause
-  % dialog
-
-  \pause
-  \begin{block}[iOS-pink]{Now, for real}
-    Goodbye!
+\begin{frame}[fragile,t]
+  \frametitle{TEST}
+  \begin{block}{block}
+    content
   \end{block}
-
-  \begin{popup}{0.75}
-    \onslide<2>
-    \begin{macosdialog}{Joking!}
-      Itz \textbf{not} over yet!
-
-      Aliquam erat volutpat. Nunc eleifend leo vitae magna. In id erat non
-      orci commodo lobortis. Proin neque massa, cursus ut, gravida ut,
-      lobortis eget, lacus. Sed diam. Praesent fermentum tempor tellus. Nullam
-      tempus. Mauris ac felis vel velit tristique imperdiet. Donec at pede.
-      Etiam vel neque nec dui dignissim bibendum. Vivamus id enim. Phasellus
-      neque orci, porta a, aliquet quis, semper a, massa. Phasellus purus.
-      Pellentesque tristique imperdiet tortor. Nam euismod tellus id erat.
-
-      Aliquam erat volutpat. Nunc eleifend leo vitae magna. In id erat non
-      orci commodo lobortis. Proin neque massa, cursus ut, gravida ut,
-      lobortis eget, lacus. Sed diam. Praesent fermentum tempor tellus. Nullam
-      tempus. Mauris ac felis vel velit tristique imperdiet.
-    \end{macosdialog}
-
-    \onslide<4>
-    \begin{macosdarkdialog}{Here iz sum code for ya! :3}
-      \begin{minted}[autogobble,breaklines,escapeinside=||]{latex}
-\begin{popup}{0.75}
-  \begin{macosdarkdialog}{Here iz sum code for ya! :3}
-  \end{macosdarkdialog}
-\end{popup}
-      \end{minted}
-      \footnotetext[0]{Notice how the syntactic coloration changes.}
-    \end{macosdarkdialog}
-  \end{popup}
-
-  \begin{popup}{.75}
-    \onslide<6>
-    \begin{macosdarkdialog}{Slime REPL}
-      \begin{minted}[autogobble,breaklines,escapeinside=||]{cl}
-LISP> (setf a 12)
-12
-LISP> (if (zerop a) -1 a)
-12
-LISP> (defun fact (n)
-        "Computes n!"
-        (if (= n 0)
-            1
-            (* n (fact (1- n)))))
-FACT
-      \end{minted}
-    \end{macosdarkdialog}
-  \end{popup}
 \end{frame}
 
-\begin{standoutframe}
-  \begin{center}
-    \scalebox{1.5}[1.5]{\Huge \bfseries Any questions?}
-  \end{center}
-\end{standoutframe}
+
+\section{Any questions?}
+% \begin{standoutframe}
+%   \begin{center}
+%     \scalebox{1.5}[1.5]{\Huge \bfseries Any questions?}
+%   \end{center}
+% \end{standoutframe}
 
 % \appendix{}
 

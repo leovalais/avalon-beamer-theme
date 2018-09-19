@@ -9,7 +9,6 @@
   width=\the\paperwidth+1em,#1
 }
 
-
 % Frame title
 \defbeamertemplate*{frametitle}{avalon}[1][]
 {
@@ -47,10 +46,12 @@
   } \fi
 }
 
+% \defbeamertemplate*{headline}{avalon}{hello}
+
 \defbeamertemplate*{footline}{avalon}{
   \ifthenelse{\isundefined{\avalon@blueprint}}{
-    \ifthenelse{\insertframenumber = 0\OR\NOT\isundefined{\avalon@standout}}{%
-      % don't show it in the title slide nor in standout frames%
+    \ifthenelse{\insertframenumber = 0}{%
+      % don't show it in the title slide%
     }{%
       \vspace*{-5mm}
       \hspace*{\fill} %\vspace*{-1cm} \hspace*{-5mm}

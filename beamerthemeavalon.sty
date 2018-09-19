@@ -114,24 +114,84 @@
 %%%
 %%% Standouts
 %%%
-
-\newenvironment{standoutframe}{
-  \makeatletter
-  \def\avalon@standout{1}
-  \setbeamercolor{background}{bg=avalon@primary color}
-  \setbeamercolor{normal text}{fg=avalon@background color}
-  \makeatother
-  \begin{frame}
-    \usebeamercolor[fg]{normal text}
-  }{
-  \end{frame}
-  \makeatletter
-  \setbeamercolor{normal text}{fg=avalon@primary color}
-  \setbeamercolor{background}{fg=avalon@background color}
-  \undef\avalon@standout
-  \makeatother
-  \addtocounter{framenumber}{-1} % don't count this slide
+\providebool{avalon@standout}
+\define@key{beamerframe}{standout}[true]{
+  \booltrue{avalon@standout}
+  \begingroup
+  \usebeamercolor{background}
+  \colorlet{avalon@tmpbg}{bg}
+  \usebeamercolor{primary color}
+  \colorlet{avalon@tmpfg}{fg}
+  \setbeamercolor{background}{bg=avalon@tmpfg}
+  \setbeamercolor{normal text}{fg=avalon@tmpbg}
+  \setbeamercolor{block body}{fg=avalon@tmpbg}
+  \setbeamercolor{block body example}{fg=avalon@tmpbg}
+  \setbeamercolor{block body alerted}{fg=avalon@tmpbg}
+  \setbeamercolor{itemize item}{fg=avalon@tmpbg}
+  \setbeamercolor{itemize subitem}{fg=avalon@tmpbg}
+  \setbeamercolor{itemize subsubitem}{fg=avalon@tmpbg}
+  \setbeamercolor{page number in head/foot}{fg=avalon@tmpbg}
 }
+\apptocmd{\beamer@reseteecodes}{
+  \ifbool{avalon@standout}{
+    \endgroup
+    \boolfalse{avalon@standout}
+  }{}
+}{}{}
+
+% \providebool{avalon@standout}
+% \define@key{beamerframe}{standout}[true]{
+%   \booltrue{avalon@standout}
+%   \begingroup
+%   \usebeamercolor{background}
+%   \colorlet{avalon@tmpbg}{bg}
+%   \usebeamercolor{primary color}
+%   \colorlet{avalon@tmpfg}{fg}
+%   \setbeamercolor{background}{bg=avalon@tmpfg}
+%   \setbeamercolor{normal text}{fg=avalon@tmpbg}
+%   \setbeamercolor{block body}{fg=avalon@tmpbg}
+%   \setbeamercolor{block body example}{fg=avalon@tmpbg}
+%   \setbeamercolor{block body alerted}{fg=avalon@tmpbg}
+%   \setbeamercolor{itemize item}{fg=avalon@tmpbg}
+%   \setbeamercolor{itemize subitem}{fg=avalon@tmpbg}
+%   \setbeamercolor{itemize subsubitem}{fg=avalon@tmpbg}
+%   \setbeamercolor{page number in head/foot}{fg=avalon@tmpbg}
+% }
+% \apptocmd{\beamer@reseteecodes}{
+%   \ifbool{avalon@standout}{
+%     \endgroup
+%     \boolfalse{avalon@standout}
+%   }{}
+% }{}{}
+
+% \newenvironment{standoutframe}{
+%   \makeatletter
+%   \def\avalon@standout{1}
+%   \makeatother
+%   \begin{@empty}
+%     \usebeamercolor{background}
+%     \colorlet{avalon@tmpbg}{bg}
+%     \usebeamercolor{primary color}
+%     \colorlet{avalon@tmpfg}{fg}
+%     \setbeamercolor{background}{bg=avalon@tmpfg}
+%     \setbeamercolor{normal text}{fg=avalon@tmpbg}
+%     \setbeamercolor{block body}{fg=avalon@tmpbg}
+%     \setbeamercolor{block body example}{fg=avalon@tmpbg}
+%     \setbeamercolor{block body alerted}{fg=avalon@tmpbg}
+%     \setbeamercolor{itemize item}{fg=avalon@tmpbg}
+%     \setbeamercolor{itemize subitem}{fg=avalon@tmpbg}
+%     \setbeamercolor{itemize subsubitem}{fg=avalon@tmpbg}
+%     \setbeamercolor{page number in head/foot}{fg=avalon@tmpbg}
+%     \begin{frame}
+%       \usebeamercolor{normal text}
+%       \color{fg}
+% }{%
+%     \end{frame}
+%   \end{@empty}
+%   \makeatletter
+%   \undef\avalon@standout
+%   \makeatother
+% }
 
 
 %%%
@@ -178,7 +238,7 @@
     \setbeamercolor{normal text}{fg=avalon@macostextcoldark}
     \setbeamercolor{alerted text}{fg=iOS-red!80!white}
     \setbeamercolor{itemize/enumerate body}{fg=avalon@macostextcoldark}
-    \usemintedstyle{\avalondarkmintedstyle}
+    \ifthenelse{\isundefined{\usemintedstyle}}{}{\usemintedstyle{\avalondarkmintedstyle}}
     \color{avalon@macostextcoldark}
   }{
   \end{tcolorbox}
@@ -191,6 +251,9 @@
 \newenvironment{avalon@generic block}[3]{%
   \usebeamercolor{#2}
   \begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{fg},left=2em,top=.10em,bottom=.10em]%
+%   \begin{tcolorbox}[enhanced,skin=enhancedmiddle,
+% frame hidden,borderline
+% west={1pt}{3mm}{fg},colback=fg!10,left=0em,top=.10em,bottom=.10em,left skip=0mm]%
     % add item only if title exists%
     \ifthenelse{\equal{#1}{\@empty}}{}{%
       \color{fg}
