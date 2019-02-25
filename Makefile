@@ -1,3 +1,5 @@
+export TEXINPUTS:=./texmf//:./macosbox//:./latex-apple-colors//:${TEXINPUTS}
+
 all:
 	pdflatex -shell-escape avalon-example
 bib:

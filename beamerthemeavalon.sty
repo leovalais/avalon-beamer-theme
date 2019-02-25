@@ -5,8 +5,9 @@
 \RequirePackage{tikz}
 \RequirePackage{scrextend} % addmargin
 \RequirePackage[most]{tcolorbox}
-\RequirePackage{fontawesome}
 \RequirePackage[absolute,overlay]{textpos} % textblock* [text independant,above everything else]
+\RequirePackage{fontawesome}
+\RequirePackage{applecolors}
 
 \usetikzlibrary{calc,decorations.pathmorphing,patterns,shapes,positioning,fit}
 \pgfdeclaredecoration{blueprintbyhand}{initial}{
@@ -204,46 +205,6 @@
     \end{overprint}
   \end{textblock*}
 }
-
-\newcommand{\avalon@macosdot}[1]{\small\textcolor{#1}{\faCircle}}
-\newtcolorbox{macosdialog}[2][]{enhanced,
-      coltitle=black,
-      colback=avalon@macosbg,
-      boxrule=0mm,
-      frame style={draw=avalon@macosbord,fill=avalon@macosbord},
-      title style={top color=avalon@macostop,bottom color=avalon@macosbot},
-      drop fuzzy shadow=black,
-      #1, %hbox
-      title=\hspace*{-3mm}%
-      \avalon@macosdot{avalon@macosred} %
-      \avalon@macosdot{avalon@macosyellow} %
-      \avalon@macosdot{avalon@macosgreen}%
-      \hspace*{\fill}\hspace*{-10mm}#2\hspace*{\fill}
-    }
-
-\newenvironment{macosdarkdialog}[2][]{
-  \begin{tcolorbox}[enhanced,
-    coltitle=white,
-    colback=avalon@macosbgdark,
-    boxrule=0mm,
-    frame style={draw=avalon@macosborddark,fill=avalon@macosborddark},
-    title style={top color=avalon@macostopdark,bottom color=avalon@macosbotdark},
-    drop fuzzy shadow=black,
-    #1, %hbox
-    title=\hspace*{-3mm}%
-    \avalon@macosdot{avalon@macosred} %
-    \avalon@macosdot{avalon@macosyellow} %
-    \avalon@macosdot{avalon@macosgreen}%
-    \hspace*{\fill}\hspace*{-10mm}#2\hspace*{\fill}]
-    \setbeamercolor{normal text}{fg=avalon@macostextcoldark}
-    \setbeamercolor{alerted text}{fg=iOS-red!80!white}
-    \setbeamercolor{itemize/enumerate body}{fg=avalon@macostextcoldark}
-    \ifthenelse{\isundefined{\usemintedstyle}}{}{\usemintedstyle{\avalondarkmintedstyle}}
-    \color{avalon@macostextcoldark}
-  }{
-  \end{tcolorbox}
-}
-
 
 %%%
 %%% Blocks

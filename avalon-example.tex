@@ -6,6 +6,7 @@
 \usepackage{minted}
 \usepackage{appendixnumberbeamer}
 \usepackage{hyperref}
+\usepackage{macosbox}
 % \usepackage[texcoord,grid,gridunit=mm,gridcolor=red!20,subgridcolor=gray!10]{eso-pic}
 
 \usemintedstyle{colorful}
@@ -216,9 +217,32 @@
 
 \subsection{Blueprints}
 \subsubsection{Demo}
+  \makeatletter
+  \def\avalon@blueprint{1}
+  \makeatother
+\begin{frame}[fragile]
+  \frametitle{Blueprint}
+  hello
+\begin{minted}{haskell}
+foo :: [String] -> String
+foo [] = ""
+foo [s] = s
+foo (s:ss) = s ++ "," ++ (foo ss)
+\end{minted}
+\end{frame}
+  \makeatletter
+  \undef\avalon@blueprint
+  \makeatother
+
 \begin{blueprintframe}
   \frametitle{Blueprint}
   hello
+% \begin{minted}{haskell}
+% foo :: [String] -> String
+% foo [] = ""
+% foo [s] = s
+% foo (s:ss) = s ++ "," ++ (foo ss)
+% \end{minted}
 \end{blueprintframe}
 
 
@@ -229,6 +253,17 @@
   \end{block}
 \end{frame}
 
+\subsection{Popups}
+\begin{frame}
+  \frametitle{Simple popup}
+  \texttt{popup} environment embeeds an \texttt{overprint} environment.
+  \begin{popup}{.75}
+    \onslide<2>
+    \begin{macosbox}{Title}
+      Content
+    \end{macosbox}
+  \end{popup}
+\end{frame}
 
 \section{Any questions?}
 % \begin{standoutframe}
