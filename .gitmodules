@@ -1,3 +1,6 @@
 [submodule "latex-apple-colors"]
 	path = latex-apple-colors
 	url = https://github.com/leovalais/latex-apple-colors.git
+[submodule "flatbox"]
+	path = flatbox
+	url = https://github.com/leovalais/flatbox.git
