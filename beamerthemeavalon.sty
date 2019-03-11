@@ -10,27 +10,7 @@
 \RequirePackage{applecolors}
 \RequirePackage{flatbox}
 
-\usetikzlibrary{calc,decorations.pathmorphing,patterns,shapes,positioning,fit}
-\pgfdeclaredecoration{blueprintbyhand}{initial}{
-    \state{initial}[width=+\pgfdecoratedinputsegmentremainingdistance,auto corner on length=1mm,]{
-        \pgfpathcurveto%
-        {% From
-            \pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}
-                            {\pgfdecorationsegmentamplitude}
-        }
-        {%  Control 1
-        \pgfmathrand
-        \pgfpointadd{\pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}{0pt}}
-                        {\pgfqpoint{-\pgfdecorationsegmentaspect\pgfdecoratedinputsegmentremainingdistance}%
-                                        {\pgfmathresult\pgfdecorationsegmentamplitude}
-                        }
-        }
-        {%TO
-        \pgfpointadd{\pgfpointdecoratedinputsegmentlast}{\pgfpoint{1pt}{1pt}}
-        }
-    }
-    \state{final}{}
-}
+\usetikzlibrary{calc,shapes,positioning,fit}
 
 % Settings
 \usecolortheme{avalon}
@@ -64,31 +44,6 @@
 %%%
 %%% Blueprints
 %%%
-
-% \def\bpbyhand{1}
-\ifthenelse{\isundefined{\bpbyhand}}{
-  \def\bpdecoration{}
-}{
-  \def\bpdecoration{blueprintbyhand}
-}
-
-\newcommand{\bp}[2][]{
-  \ifthenelse{\isundefined{\bpbyhand}}{
-    \node[decorate,draw=white,thick,#1]#2;
-  }{
-    \node[decorate,draw=white,#1]#2;
-    \node[decorate,draw=white,#1,bend left]#2;
-    \node[decorate,draw=white,#1,bend right]#2;
-  }
-}
-\newcommand{\bparrow}[2][]{
-  \draw[decorate,draw=white,thick,->,#1]#2;
-}
-\newcommand{\pbgroup}[3][left]{
-  \node[draw=white,very thick,dashed,fit={#3}] (group#2) {};
-  \node[#1=of group#2,rotate=90,anchor=center] () {\large\color{white}#2};
-}
-
 \newenvironment{blueprintframe}{
   \makeatletter
   \def\avalon@blueprint{1}
@@ -210,51 +165,11 @@
 %%%
 %%% Blocks
 %%%
-\newenvironment{avalon@generic block}[3]{%
-  \usebeamercolor{#2}
-  \begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{fg},left=2em,top=.10em,bottom=.10em]%
-%   \begin{tcolorbox}[enhanced,skin=enhancedmiddle,
-% frame hidden,borderline
-% west={1pt}{3mm}{fg},colback=fg!10,left=0em,top=.10em,bottom=.10em,left skip=0mm]%
-    % add item only if title exists%
-    \ifthenelse{\equal{#1}{\@empty}}{}{%
-      \color{fg}
-      \usebeamerfont{#2}
-      #1}
-
-    \usebeamercolor[fg]{#3}
-    \usebeamerfont{#3}
-  }{%
-  \end{tcolorbox}}
-\renewenvironment{alertblock}[1]{%
-  \begin{avalon@generic block}{#1}{block title alerted}{block body alerted}
-  }{
-  \end{avalon@generic block}}
-\renewenvironment{exampleblock}[1]{%
-  \begin{avalon@generic block}{#1}{block title example}{block body example}
-  }{
-  \end{avalon@generic block}}
-
-\renewenvironment{block}[2][]{
-  \begin{@empty}
-    \ccft{block title}
-    \ifthenelse{\equal{#1}{\@empty}}{
-      \begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{avalon@ccft.fg},left=2em,top=.10em,bottom=.10em]
-      }{\begin{tcolorbox}[blanker,borderline west={1pt}{3mm}{#1},left=2em,top=.10em,bottom=.10em]}
-        \ifthenelse{\equal{#2}{\@empty}}{}{%
-          \ifthenelse{\equal{#1}{\@empty}}{\color{avalon@ccft.fg}}{\color{#1}}
-          \usebeamerfont{block title}
-          #2}
-
-        \usebeamercolor[fg]{block body}
-        \usebeamerfont{block body}
-    }{
-    \end{tcolorbox}
-  \end{@empty}}
-\renewenvironment{theorem}[1][Theorem]{
-  \begin{block}[black]{#1}
-  }{
-  \end{block}
-}
+\setflatboxcolor[bg]{groupbox}{avalon@background color}
+\renewenvironment{block}[1]{\begin{groupbox}{#1}}{\end{groupbox}}
+\renewenvironment{exampleblock}[1]{\begin{examplegroupbox}{#1}}{\end{examplegroupbox}}
+\renewenvironment{alertblock}[1]{\begin{alertgroupbox}{#1}}{\end{alertgroupbox}}
+\renewenvironment{theorem}{\begin{theoremgroupbox}{Theorem}}{\end{theoremgroupbox}}
+\renewenvironment{note}[1]{\begin{notegroupbox}{#1}}{\end{notegroupbox}}
 
 \mode<all>
